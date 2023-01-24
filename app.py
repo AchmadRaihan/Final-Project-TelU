@@ -22,7 +22,7 @@ def build_model(df):
 	future = m.make_future_dataframe(periods=period, freq='h')
 	forecast = m.predict(future)
     # Plot forecast
-	st.write(f'*Grafik Prediksi Tinggi Air Sungai Untuk {n_days} Hari*')
+	st.write(f'**Grafik Prediksi Tinggi Air Sungai Untuk {n_days} Hari**')
 	fig1 = plot_plotly(m, forecast, xlabel='Waktu', ylabel='Tinggi Air (m)')
 	st.plotly_chart(fig1)
 
