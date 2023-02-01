@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from prophet import Prophet
+from prophet.plot import plot_plotly
 from plotly import graph_objs as go
 
 
@@ -13,49 +14,25 @@ st.set_page_config(page_title='Sistem PTAS', layout='wide')
 #---------------------------------#
 # Build model
 def build_model(df):
-    model = Prophet(
+    m = Prophet(
         changepoint_prior_scale=0.5,
         seasonality_prior_scale=7.0,
-        seasonality_mode='multiplicative'
-    ).fit(df)
-    future = model.make_future_dataframe(periods=period, freq='h')
-    forecast = model.predict(future)
-    df['ds'] = pd.to_datetime(df['ds'])
-    fig1 = go.Figure()
-    fig1.add_trace(
-        go.Scatter(
-            x=df['ds'],
-            y=df['y'],
-            name='Aktual',
-            marker={'color': 'blue'}
-        )
-    )
-    fig1.add_trace(
-        go.Scatter(
-            x=df['ds'],
-            y=forecast['yhat'],
-            name='Prediksi',
-            marker={'color': 'red'}
-        )
-    )
-    fig1.update_layout(
-        title_text='Grafik Hasil Prediksi Tinggi Air Sungai',
-        xaxis_rangeslider_visible=True,
-        xaxis_title='Waktu',
-        yaxis_title='Tinggi Air (m)',
-        font_family='Franklin Gothic',
-        font=dict(
-            size=18,
-            color='RebeccaPurple'
-        )
-    )
-    st.plotly_chart(fig1)
+        seasonality_mode='multiplicative',
+        interval_width=0
+	).fit(df)
+    future = m.make_future_dataframe(periods=period, freq='h')
+    forecast = m.predict(future)
+    # Plot Forecast
+    st.write(f'###### Grafik Hasil Prediksi Tinggi Air Sungai {n_days} Hari')
+    fig = plot_plotly(m, forecast, xlabel='Waktu', ylabel='Tinggi Air (m)')
+    st.plotly_chart(fig)
+
 
 def plot_raw_data(df):
     df['ds'] = pd.to_datetime(df['ds'])
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=df['ds'], y=df['y'], name="stock_op"))
-    fig.layout.update(title_text='Grafik Tinggi Air Sungai', xaxis_rangeslider_visible=True, xaxis_title='Waktu', yaxis_title='Tinggi Air (m)')
+    fig.add_trace(go.Scatter(x=df['ds'], y=df['y'], name="stock_open"))
+    fig.layout.update(title_text='Grafik Tinggi Air Sungai', xaxis_rangeslider_visible=True)
     st.plotly_chart(fig)
 
 
@@ -64,7 +41,7 @@ def plot_raw_data(df):
 with st.sidebar.header('*Upload .csv file*'):
     uploaded_file = st.sidebar.file_uploader('*file .csv*', type=["csv"])
     st.sidebar.markdown("""
-	[Contoh .csv *file*](https://github.com/AchmadRaihan/ptas/blob/main/kalu.csv)
+	[Contoh .csv *file*](https://github.com/AchmadRaihan/kalu-data/blob/main/kalu.csv)
 	""")
 # Sidebar - Days of prediction
 n_days = st.sidebar.slider('Durasi Hari Prediksi:', 0, 7)
