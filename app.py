@@ -41,7 +41,7 @@ def plot_raw_data(df):
 with st.sidebar.header('*Upload .csv file*'):
     uploaded_file = st.sidebar.file_uploader('*file .csv*', type=["csv"])
     st.sidebar.markdown("""
-	[Contoh .csv *file*](https://github.com/AchmadRaihan/kalu-data/blob/main/kalu.csv)
+	[Contoh .csv *file*](https://github.com/AchmadRaihan/ptas/blob/main/kalu.csv)
 	""")
 # Sidebar - Days of prediction
 n_days = st.sidebar.slider('Durasi Hari Prediksi:', 0, 7)
