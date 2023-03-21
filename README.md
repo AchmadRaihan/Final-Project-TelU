@@ -6,3 +6,4 @@ Flooding is one of the incidents that result in a major adverse impact, causing 
 ## System Design
 
 ## Conclusion
+Evaluation after hyperparameter tuning with 3 different data using Theil's U has shown the smallest average error that is 0.187044. The dashboard can predict and display data directly after uploading. Then, the dashboard has sample data that can be used to see the performance in making predictions.
