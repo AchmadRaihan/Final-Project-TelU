@@ -14,3 +14,7 @@ There are 3 steps in the dashboard work process, they are upload data, forecast 
 
 ## Conclusion
 Evaluation after hyperparameter tuning with 3 different data using Theil's U has shown the smallest average error that is 0.187044. The dashboard can predict and display data directly after uploading. Then, the dashboard has sample data that can be used to see the performance in making predictions.
+
+#### Note:
+##### Dashboard
+https://achmadraihan-ptas-app-47m035.streamlit.app/
